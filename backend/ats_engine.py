@@ -1,8 +1,6 @@
 import re
-from sentence_transformers import SentenceTransformer
 from sklearn.metrics.pairwise import cosine_similarity
 
-model = SentenceTransformer('all-MiniLM-L6-v2')
 
 def extract_keywords(text):
     return list(set(re.findall(r'\b[a-zA-Z]+\b', text.lower())))
@@ -17,9 +15,11 @@ def classify_keywords(jd):
     return list(set(must)), list(set(optional))
 
 def semantic_score(resume, jd):
-    emb1 = model.encode([resume])
-    emb2 = model.encode([jd])
-    return cosine_similarity(emb1, emb2)[0][0] * 100
+    resume_words = set(resume.lower().split())
+    jd_words = set(jd.lower().split())
+    
+    common = resume_words.intersection(jd_words)
+    return (len(common) / (len(jd_words)+1)) * 100
 
 def calculate_ats(resume, jd):
     must, optional = classify_keywords(jd)
