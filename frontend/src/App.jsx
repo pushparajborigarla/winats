@@ -13,7 +13,7 @@ export default function App(){
     const f=new FormData();
     f.append("resume",resume);
     f.append("jd",jd);
-    const r=await axios.post("http://localhost:8000/analyze",f);
+    const r=await axios.post("https://winats-1.onrender.com/analyze",f);
     setRes(r.data);
   }
 
@@ -22,7 +22,7 @@ export default function App(){
     f.append("resume",resume);
     f.append("jd",jd);
     f.append("question",q);
-    const r=await axios.post("http://localhost:8000/chat",f);
+    const r=await axios.post("https://winats-1.onrender.com/chat",f);
     setAns(r.data.answer);
   }
 
